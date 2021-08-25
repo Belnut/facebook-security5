@@ -8,26 +8,50 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.context.annotation.RequestScope;
-
 import sample.api.facebook.Facebook;
+import sample.api.intra42.Intra42;
 
 @Configuration
 public class SocialConfig {
 
-	@Bean
-	@RequestScope
-	public Facebook facebook(OAuth2AuthorizedClientService clientService) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String accessToken = null;
-		if (authentication.getClass().isAssignableFrom(OAuth2AuthenticationToken.class)) {
-			OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
-			String clientRegistrationId = oauthToken.getAuthorizedClientRegistrationId();
-			if (clientRegistrationId.equals("facebook")) {
-				OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(clientRegistrationId, oauthToken.getName());
-				accessToken = client.getAccessToken().getTokenValue();
-			}
-		}
-		return new Facebook(accessToken);
-	}
-	
+    @Bean
+    @RequestScope
+    public Facebook facebook(OAuth2AuthorizedClientService clientService) {
+        Authentication authentication = SecurityContextHolder
+                .getContext()
+                .getAuthentication();
+
+        String accessToken = null;
+        if (authentication.getClass().isAssignableFrom(OAuth2AuthenticationToken.class)) {
+            OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
+            String clientRegistrationId = oauthToken.getAuthorizedClientRegistrationId();
+
+            if (clientRegistrationId.equals("facebook")) {
+                OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(clientRegistrationId, oauthToken.getName());
+                accessToken = client.getAccessToken().getTokenValue();
+            }
+        }
+        return new Facebook(accessToken);
+    }
+
+    @Bean
+    @RequestScope
+    public Intra42 intra42(OAuth2AuthorizedClientService clientService) {
+        Authentication authentication = SecurityContextHolder
+                .getContext()
+                .getAuthentication();
+
+        String accessToken = null;
+        if (authentication.getClass().isAssignableFrom(OAuth2AuthenticationToken.class)) {
+            OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
+            String clientRegistrationId = oauthToken.getAuthorizedClientRegistrationId();
+
+            if (clientRegistrationId.equals("intra42")) {
+                OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(clientRegistrationId, oauthToken.getName());
+                accessToken = client.getAccessToken().getTokenValue();
+            }
+        }
+        return new Intra42(accessToken);
+    }
+
 }
