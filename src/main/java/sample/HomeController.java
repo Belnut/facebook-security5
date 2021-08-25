@@ -20,16 +20,21 @@ public class HomeController {
     }
 
     @GetMapping("/facebook")
-    public String home(Model model) {
+    public String facebookInfo(Model model) {
         model.addAttribute("profile", facebook.getProfile());
         model.addAttribute("feed", facebook.getFeed());
-        return "home";
+        return "facebook_info";
     }
 
     @GetMapping("/intra42")
-    public String homeIntra42(Model model) {
+    public String intra42Info(Model model) {
         model.addAttribute("profile", intra42.getProfile());
-        model.addAttribute("profile", intra42.getFeed());
+        model.addAttribute("feed", intra42.getFeed());
+        return "intra42_info";
+    }
+
+    @GetMapping("/")
+    public String home(Model model) {
         return "home";
     }
 
