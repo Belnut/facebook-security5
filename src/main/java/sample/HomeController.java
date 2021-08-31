@@ -29,7 +29,7 @@ public class HomeController {
     @GetMapping("/intra42")
     public String intra42Info(Model model) {
         model.addAttribute("profile", intra42.getProfile());
-        model.addAttribute("feed", intra42.getFeed());
+        model.addAttribute("feed", null);
         return "intra42_info";
     }
 
